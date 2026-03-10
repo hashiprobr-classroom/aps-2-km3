@@ -80,11 +80,55 @@ void fft_inverse(complex t[], complex s[], int n) {
     normalize(s, n);
 }
 
-void fft_forward_2d(complex matrix[MAX_SIZE][MAX_SIZE], int width, int height) {
-}
 
-void fft_inverse_2d(complex matrix[MAX_SIZE][MAX_SIZE], int width, int height) {
-}
+
+
+void fft_forward_2d(complex imagem_do_ngc[MAX_SIZE][MAX_SIZE], int largura, int altura) {
+    complex entrada[MAX_SIZE];
+    complex saida[MAX_SIZE];
+
+    for (  int j = 0 ; j < largura; j++) {
+        for (int i = 0; i < altura; i++) {
+            entrada[i] = imagem_do_ngc[i][j];
+        }
+        fft(entrada, saida, altura, -1);
+        for (int i = 0; i < altura; i++) {
+            imagem_do_ngc[i][j] = saida[i];
+        }}
+
+    for (int i = 0 ; i < altura ; i++) {
+        for (int j = 0; j < largura; j++) {
+            entrada[j] = imagem_do_ngc[i][j];
+        }
+        fft(entrada, saida, largura, -1);
+        for (int j = 0; j < largura; j++) {
+            imagem_do_ngc[i][j] = saida[j];
+        }
+    }}
+
+void fft_inverse_2d(complex imagem_do_ngc[MAX_SIZE][MAX_SIZE], int largura, int altura) {
+    complex entrada[MAX_SIZE];
+    complex saida[MAX_SIZE];
+
+    for (    int i = 0; i < altura; i++) {
+        for (int   j = 0; j < largura; j++) {
+            entrada[j] =   imagem_do_ngc[i][j];
+        }
+        fft_inverse(entrada, saida, largura);
+        for (int j = 0; j < largura; j++) {
+            imagem_do_ngc[i][j] =   saida[j];
+        }}
+
+    for (int j = 0; j < largura; j++) {
+        for (int i = 0; i < altura; i++) {
+            entrada[i] = imagem_do_ngc[i][j];
+        }
+        fft_inverse(entrada, saida, altura);
+        for (int i = 0; i < altura; i++) {
+            imagem_do_ngc[i][j] = saida[i];
+        }    }
+    }
+
 
 void filter(complex input[MAX_SIZE][MAX_SIZE], complex output[MAX_SIZE][MAX_SIZE], int width, int height, int flip) {
     int center_x = width / 2;
