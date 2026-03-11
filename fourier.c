@@ -56,7 +56,7 @@ void fft(complex s[], complex t[], int n, int sign) {
     fft(si, ti, media, sign);
 
     for (int k = 0; k < media; k++) {
-        double x = -sign * 2 * PI * k / n;
+        double x = sign * 2 * PI * k / n;
         double cosx = cos(x);
         double sinx = sin(x);
 
